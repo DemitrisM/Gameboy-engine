@@ -1,10 +1,6 @@
-#include<iostream>
-#include <cstdint>
-using namespace std;
+#include "Register.h"
 
-class Registers{
-    public : 
-        void setZeroFlag(bool flag){
+void Registers::setZeroFlag(bool flag){
             if(flag){
                 F |= 0x80;
             }
@@ -12,7 +8,7 @@ class Registers{
                 F &= ~0x80;
             }
         }
-        void setSubtractFlag(bool flag){
+void Registers::setSubtractFlag(bool flag){
             if(flag){
                 F |= 0x40;
             }
@@ -20,7 +16,7 @@ class Registers{
                 F &= ~0x40;
             }
         }
-        void setHalfCarryFlag(bool flag){
+void Registers::setHalfCarryFlag(bool flag){
             if(flag){
                 F |= 0x20;
             }
@@ -28,7 +24,7 @@ class Registers{
                 F &= ~0x20;
             }
         }
-        void setCarryFlag(bool flag){
+void Registers::setCarryFlag(bool flag){
             if(flag){
                 F |= 0x10;
             }
@@ -36,35 +32,16 @@ class Registers{
                 F &= ~0x10;
             }
         }
-        bool getZeroFlag() const{
+bool Registers::getZeroFlag() const{
             return F & 0x80;
         }
-        bool getSubtractFlag() const{
+bool Registers::getSubtractFlag() const{
             return F & 0x40;
         }
-        bool getHalfCarryFlag() const{
+bool Registers::getHalfCarryFlag() const{
             return F & 0x20;
         }
-        bool getCarryFlag() const{
+bool Registers::getCarryFlag() const{
             return F & 0x10;
         }
-    private : 
-        uint8_t A, B, C, D, E, H, L, F;
-        // Stack Pointer and Program Counter
-        uint16_t SP, PC;
-        // Register Pair below
-        uint16_t BC, DE, HL;
-    
-};
-union RegisterPair{
-    //set low and high 8 bit registers or 16 bit register
-    uint16_t reg16;
-    struct{
-        uint8_t low;
-        uint8_t high;
-    };
-};
-
-int main(){
-    cout<<"hello ";
-}
+// Path: main.cpp
