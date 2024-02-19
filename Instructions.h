@@ -2,7 +2,7 @@
 #define INSTRUCTIONS_H
 
 #include <cstdint>
-#include "Register.h"
+#include "Registers.h"
 
 class Instructions{
     public:
