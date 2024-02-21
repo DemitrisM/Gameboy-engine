@@ -6,7 +6,9 @@
 
 class Instructions{
     public:
-
+        void ADD(Registers& reg, uint8_t value);
+        void ADD(Registers& reg, uint16_t value);
+        void ADC(Registers& reg, uint8_t value);
     private:
 };
 
