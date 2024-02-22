@@ -32,7 +32,34 @@ void Instructions::ADC(Registers& reg, uint8_t value){
     reg.setZeroFlag(reg.A == 0);
     reg.setSubtractFlag(false);
 }
-
-
-
+void Instructions::SUB(Registers& reg, uint8_t value){
+    uint16_t result = reg.A - value;
+    // Set the half carry flag if the lower nibble of the sum is less than the lower nibble of the value
+    reg.setHalfCarryFlag((reg.A & 0x0F) < (value & 0x0F));
+    // Set the carry flag if the sum is less than 0
+    reg.setCarryFlag(result > 0xFF);
+    //Will handle the overflow if it occurs
+    reg.A = static_cast<uint8_t>(result);
+    reg.setZeroFlag(reg.A == 0);
+    reg.setSubtractFlag(true);
+}
+void Instructions::SBC(Registers& reg, uint8_t value){
+    uint16_t result = reg.A - value - reg.getCarryFlag();
+    // Set the half carry flag if the lower nibble of the sum is less than the lower nibble of the value
+    reg.setHalfCarryFlag((reg.A & 0x0F) < (value & 0x0F) + reg.getCarryFlag());
+    // Set the carry flag if the sum is less than 0
+    reg.setCarryFlag(result > 0xFF);
+    //Will handle the overflow if it occurs
+    reg.A = static_cast<uint8_t>(result);
+    reg.setZeroFlag(reg.A == 0);
+    reg.setSubtractFlag(true);
+}
+void Instructions::INC(uint8_t& reg, Registers& flag){
+    // Set the half carry flag if the lower nibble of the value is 0x0F
+    flag.setHalfCarryFlag((reg & 0x0F) == 0x0F);
+    //Will handle the overflow if it occurs
+    reg++;
+    flag.setZeroFlag(reg == 0);
+    flag.setSubtractFlag(false);
+}
 
