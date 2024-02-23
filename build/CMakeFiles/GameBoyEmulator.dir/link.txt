@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/GameBoyEmulator.dir/main.cpp.o CMakeFiles/GameBoyEmulator.dir/Instructions.cpp.o CMakeFiles/GameBoyEmulator.dir/Registers.cpp.o -o GameBoyEmulator

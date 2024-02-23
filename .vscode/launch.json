@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CMake Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",  // This will be set by CMake Tools
+            "args": [],  // Add any program arguments you may have here
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "${command:cmake.buildTarget}",  // This will build the selected CMake target before launching
+            "miDebuggerPath": "gdb"  // Specify the path to gdb if necessary
+        }
+    ]
+}
