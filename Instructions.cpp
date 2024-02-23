@@ -37,7 +37,7 @@ void Instructions::SUB(Registers& reg, uint8_t value){
     // Set the half carry flag if the lower nibble of the sum is less than the lower nibble of the value
     reg.setHalfCarryFlag((reg.A & 0x0F) < (value & 0x0F));
     // Set the carry flag if the sum is less than 0
-    reg.setCarryFlag(result > 0xFF);
+    reg.setCarryFlag(reg.A < value);
     //Will handle the overflow if it occurs
     reg.A = static_cast<uint8_t>(result);
     reg.setZeroFlag(reg.A == 0);
@@ -45,10 +45,9 @@ void Instructions::SUB(Registers& reg, uint8_t value){
 }
 void Instructions::SBC(Registers& reg, uint8_t value){
     uint16_t result = reg.A - value - reg.getCarryFlag();
-    // Set the half carry flag if the lower nibble of the sum is less than the lower nibble of the value
-    reg.setHalfCarryFlag((reg.A & 0x0F) < (value & 0x0F) + reg.getCarryFlag());
-    // Set the carry flag if the sum is less than 0
-    reg.setCarryFlag(result > 0xFF);
+    reg.setCarryFlag(reg.A < (value + reg.getCarryFlag()));
+    // Set the half carry flag if the lower nibble of the value is less than the lower nibble of the value + carry
+    reg.setHalfCarryFlag((reg.A & 0x0F) < ((value & 0x0F) + reg.getCarryFlag()));
     //Will handle the overflow if it occurs
     reg.A = static_cast<uint8_t>(result);
     reg.setZeroFlag(reg.A == 0);
@@ -62,4 +61,37 @@ void Instructions::INC(uint8_t& reg, Registers& flag){
     flag.setZeroFlag(reg == 0);
     flag.setSubtractFlag(false);
 }
+void Instructions::INC(uint16_t& regPair){
+    regPair++;
+}
+void Instructions::DEC(uint8_t& reg, Registers& flag){
+    // Set the half carry flag if the lower nibble of the value is 0x0F
+    flag.setHalfCarryFlag((reg & 0x0F) == 0x00);
+    //Will handle the overflow if it occurs
+    reg--;
+    flag.setZeroFlag(reg == 0);
+    flag.setSubtractFlag(true);
+}
+void Instructions::DEC(uint16_t& regPair){
+    regPair--;
+}
+void Instructions::DAA(Registers& reg){
+    uint8_t correction = 0;
+    if(reg.getSubtractFlag()){
+        if(reg.getHalfCarryFlag()) correction |= 0x06;
+        if(reg.getCarryFlag()) correction |= 0x60;
+    }
+    else {
+        if((reg.A & 0x0F > 0x09) || reg.getHalfCarryFlag()) correction |= 0x06;
+        if(reg.A& 0xF0 > 0x90 || reg.getCarryFlag()){
+            correction |= 0x60;
+            reg.setCarryFlag(true);
+        }   
+    }   
+    reg.A += reg.getSubtractFlag() ? -correction : correction;
+    reg.setHalfCarryFlag(false);
+    reg.setZeroFlag(reg.A == 0);
+}
+
+
 
