@@ -1,6 +1,6 @@
 #include "Instructions.h"
 
-void Instructions::ADD(Registers& reg, uint8_t value){
+void Instructions::ADD_8bit(Registers& reg, uint8_t value){
     uint16_t result = reg.A + value;
     // Set the half carry flag if the lower nibble of the sum is greater than 0x0F
     reg.setHalfCarryFlag((reg.A & 0x0F) + (value & 0x0F) > 0x0F);
@@ -11,7 +11,7 @@ void Instructions::ADD(Registers& reg, uint8_t value){
     reg.setZeroFlag(reg.A == 0);
     reg.setSubtractFlag(false);
 }
-void Instructions::ADD(Registers& reg, uint16_t value){
+void Instructions::ADD_16_bit(Registers& reg, uint16_t value){
     uint32_t result = reg.HL.reg16 + value;
     // Set the half carry flag if the lower nibble of the sum is greater than 0x0F
     reg.setHalfCarryFlag((reg.HL.reg16 & 0x0FFF) + (value & 0x0FFF) > 0x0FFF);
@@ -53,7 +53,7 @@ void Instructions::SBC(Registers& reg, uint8_t value){
     reg.setZeroFlag(reg.A == 0);
     reg.setSubtractFlag(true);
 }
-void Instructions::INC(uint8_t& reg, Registers& flag){
+void Instructions::INC_8bit(uint8_t& reg, Registers& flag){
     // Set the half carry flag if the lower nibble of the value is 0x0F
     flag.setHalfCarryFlag((reg & 0x0F) == 0x0F);
     //Will handle the overflow if it occurs
@@ -61,10 +61,10 @@ void Instructions::INC(uint8_t& reg, Registers& flag){
     flag.setZeroFlag(reg == 0);
     flag.setSubtractFlag(false);
 }
-void Instructions::INC(uint16_t& regPair){
+void Instructions::INC_16bit(uint16_t& regPair){
     regPair++;
 }
-void Instructions::DEC(uint8_t& reg, Registers& flag){
+void Instructions::DEC_8bit(uint8_t& reg, Registers& flag){
     // Set the half carry flag if the lower nibble of the value is 0x0F
     flag.setHalfCarryFlag((reg & 0x0F) == 0x00);
     //Will handle the overflow if it occurs
@@ -72,7 +72,7 @@ void Instructions::DEC(uint8_t& reg, Registers& flag){
     flag.setZeroFlag(reg == 0);
     flag.setSubtractFlag(true);
 }
-void Instructions::DEC(uint16_t& regPair){
+void Instructions::DEC_16bit(uint16_t& regPair){
     regPair--;
 }
 void Instructions::DAA(Registers& reg){
