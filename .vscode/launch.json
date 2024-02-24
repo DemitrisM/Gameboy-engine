@@ -5,8 +5,8 @@
             "name": "CMake Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${command:cmake.launchTargetPath}",  // This will be set by CMake Tools
-            "args": [],  // Add any program arguments you may have here
+            "program": "${command:cmake.launchTargetPath}",  
+            "args": [], 
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -19,8 +19,8 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "${command:cmake.buildTarget}",  // This will build the selected CMake target before launching
-            "miDebuggerPath": "gdb"  // Specify the path to gdb if necessary
+            "preLaunchTask": "${command:cmake.buildTarget}",  
+            "miDebuggerPath": "gdb"  
         }
     ]
 }
