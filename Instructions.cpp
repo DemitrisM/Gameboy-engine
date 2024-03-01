@@ -93,5 +93,6 @@ void Instructions::DAA(Registers& reg){
     reg.setZeroFlag(reg.A == 0);
 }
 
+//We have to implement the LD isntruction
 
 
