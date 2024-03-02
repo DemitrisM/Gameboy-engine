@@ -1,0 +1,3 @@
+/home/pmafma/Coding/C++/build/CMakeFiles/GameBoyEmulator.dir
+/home/pmafma/Coding/C++/build/CMakeFiles/edit_cache.dir
+/home/pmafma/Coding/C++/build/CMakeFiles/rebuild_cache.dir
